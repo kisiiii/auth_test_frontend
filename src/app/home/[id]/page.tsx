@@ -2,13 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 import LogoutButton from "@/components/LogoutButton";
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default async function HomePage({ params }: PageProps) {
+export default async function HomePage({ params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
 
   if (!session || session.user.id !== params.id) {
