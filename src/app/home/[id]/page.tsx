@@ -17,3 +17,8 @@ export default async function HomePage({ params }: { params: { id: string } }) {
     </div>
   );
 }
+
+// 🔑 これがないと、Next.js が `params` を Promise 扱いしてしまう可能性がある
+export async function generateStaticParams() {
+  return []; // 空でもよい（SSR用途でもOK）
+}
