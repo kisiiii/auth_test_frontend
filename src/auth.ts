@@ -2,6 +2,33 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import type { NextAuthOptions } from "next-auth";
 import axios from "axios";
 
+import type { Session, User } from "next-auth";
+import type { JWT } from "next-auth/jwt";
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+      name: string;
+      email?: string;
+    };
+  }
+
+  interface User {
+    id: string;
+    name: string;
+    email?: string;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id: string;
+    name: string;
+    email?: string;
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -49,8 +76,8 @@ export const authOptions: NextAuthOptions = {
     // user.idでルーティングする際に必要（一応設定）
     async session({ session, token }) {
       if (token) {
-        (session.user as any).id = token.id;
-        (session.user as any).name = token.name;
+        session.user.id = token.id;
+        session.user.name = token.name;
       }
       return session;
     },
