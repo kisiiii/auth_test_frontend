@@ -2,13 +2,17 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 import LogoutButton from "@/components/LogoutButton";
 
-export default async function HomePage(promise: Promise<{ params: { id: string } }>) {
-  const { params } = await promise;
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
 
+export default async function HomePage({ params }: PageProps) {
   const session = await getServerSession(authOptions);
 
   if (!session || session.user.id !== params.id) {
-    return <div>認証エラー: アクセスが許可されていません</div>;
+    return <div>アクセスが許可されていません</div>;
   }
 
   return (
