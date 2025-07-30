@@ -6,15 +6,15 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token, // トークンがあればOK
+      authorized: ({ token }) => !!token, // JWTトークンがあればOK
     },
     pages: {
-      signIn: "/login", // ログインページへリダイレクト
+      signIn: "/login", // JWTトークンが無ければログインページへリダイレクト
     },
   }
 );
 
-// このミドルウェアを適用するルートパターン
+// 認証が必要なページを指定
 export const config = {
   matcher: ["/test"],
 };

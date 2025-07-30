@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,12 +23,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Try to get the session safely
-  try {
-    await getServerSession(authOptions);
-  } catch (error) {
-    console.error("Auth error:", error);
-  }
+  // Session is now handled by NextAuth API routes
 
   return (
     <html lang="ja">
